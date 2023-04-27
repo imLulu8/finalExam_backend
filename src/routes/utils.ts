@@ -4,12 +4,7 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/User";
 const jwtToken = "shhhhhhh";
 
-export const checkErrors = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  // Finds the validation errors in this request and wraps them in an object with handy functions
+export const checkErrors = (req: Request,res: Response,next: NextFunction) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     if (errors.array()[0].param === "authorization") {
@@ -20,11 +15,7 @@ export const checkErrors = (
   next();
 };
 
-export const isAuth = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const isAuth = async (req: Request,res: Response,next: NextFunction) => {
   const auth = req.headers.authorization as string;
   const user = jwt.verify(auth, jwtToken) as { id: string };
   res.locals.userFinded = await User.findById(user.id);

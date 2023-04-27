@@ -267,6 +267,10 @@ describe.only("courses", () => {
  
 
   describe("Get courses", () => {
+    before(async () => {
+      await Course.findByIdAndDelete(id);
+    });
+    
     let ids: string[] = [];
     const courses = [
       {
